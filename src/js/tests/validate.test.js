@@ -4,6 +4,7 @@ describe('validateWidget', () => {
     document.body.innerHTML = '<main class="main"></main>'
     const main = document.querySelector('.main')
     const widget = new validateWidget(main);
+    HTMLFormElement.prototype.submit = jest.fn();
     
     widget.bindToDom();
     const form = main.querySelector('form');
