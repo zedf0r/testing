@@ -1,0 +1,7 @@
+import img1 from "../../image/jcb.svg"
+import img2 from "../../image/american-express.svg"
+import img3 from "../../image/diners-club.svg"
+import img4 from "../../image/discover.svg"
+import img5 from "../../image/mastercard.svg"
+import img6 from "../../image/mir.svg"
+import img7 from "../../image/visa.svg"
