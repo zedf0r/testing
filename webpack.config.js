@@ -1,7 +1,6 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPluign = require('html-webpack-plugin');
 const path = require('path');
-const { watch } = require('fs');
 
 module.exports = {
     mode: 'production',

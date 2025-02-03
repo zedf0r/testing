@@ -164,10 +164,11 @@ export class validateWidget {
       if (existBox) {
         existBox.remove();
       }
+      const widgetCard = this.element.querySelector('.widget-card')
       const createBox = document.createElement("p");
       createBox.innerHTML = `Ваша карта принадлежит платеженой системе ${this.cardType.toUpperCase()}`;
       this.cardType = "";
-      this.element.appendChild(createBox);
+      widgetCard.appendChild(createBox);
     });
     form.addEventListener("input", () => {
       this.getCardNumber();
