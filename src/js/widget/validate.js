@@ -57,26 +57,33 @@ export class validateWidget {
   }
 
   validateAlgorithm() {
-    let cardNumberReverse = this.card.split("").reverse();
-    let resultArray = [];
-    cardNumberReverse.forEach((number, index) => {
+    const form = document.querySelector('form');
+    form.removeAttribute('data-status')
+    let cardNumberReverse = this.card.split("").reverse().map(Number);
+    const resultSum = cardNumberReverse.reduce((acc, number, index) => {
       if (index % 2 === 1) {
         number *= 2;
         if (number > 9) {
           number -= 9;
         }
       }
-      resultArray.push(Number(number));
-    });
-    let cardSum = resultArray.reduce((sum, acc) => sum + acc, 0);
-    if (cardSum % 10 === 0) {
-      return (this.statusCard = true);
+      return acc + number;
+    }, 0)
+    const isValid = resultSum % 10 === 0
+    if (isValid) {
+      form.setAttribute('data-status', true)
+      this.statusCard = true;
+    } else {
+      form.setAttribute('data-status', false)
     }
-    return false;
   }
 
   validateCardType() {
     if (this.statusCard) {
+      const cards = document.querySelectorAll('[data-card]');
+      cards.forEach(card => {
+        card.removeAttribute('data-active')
+      })
       const cardLength = this.card.length;
       const americanCardNumber = ["34", "37"];
       if (
@@ -84,35 +91,40 @@ export class validateWidget {
         cardLength >= 13 &&
         cardLength <= 16
       ) {
-        return (this.cardType = "visa");
+        const card = document.querySelector('[data-card="visa"]')
+        card.setAttribute('data-active', true)
       } else if (
         Number(this.card.slice(0, 2)) >= 51 &&
         Number(this.card.slice(0, 2)) <= 55 &&
         cardLength === 16
       ) {
-        return (this.cardType = "mastercard");
+        const card = document.querySelector('[data-card="mastercard"]')
+        card.setAttribute('data-active', true)
       } else if (
         americanCardNumber.includes(this.card.slice(0, 2)) &&
         cardLength === 15
       ) {
-        return (this.cardType = "american express");
+        const card = document.querySelector('[data-card="american express"]')
+        card.setAttribute('data-active', true)
       } else if (Number(this.card.slice(0, 4)) === 6011 && cardLength === 16) {
-        return (this.cardType = "discover");
+        const card = document.querySelector('[data-card="discover"]')
+        card.setAttribute('data-active', true)
       } else if (
         Number(this.card.slice(0, 4)) >= 3528 &&
         Number(this.card.slice(0, 4)) <= 3589 &&
         cardLength >= 16 &&
         cardLength <= 19
       ) {
-        return (this.cardType = "jcb");
+        const card = document.querySelector('[data-card="jcb"]')
+        card.setAttribute('data-active', true)
       } else if (Number(this.card.slice(0, 1)) === 2 && cardLength === 16) {
-        return (this.cardType = "mir");
+        const card = document.querySelector('[data-card="mir"]')
+        card.setAttribute('data-active', true)
       } else if (
         Number(this.card.slice(0, 1)) === 3 &&
         cardLength >= 14 &&
         cardLength <= 16
       ) {
-        return (this.cardType = "diners club");
       }
     }
   }
