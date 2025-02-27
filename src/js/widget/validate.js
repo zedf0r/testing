@@ -56,9 +56,7 @@ export class validateWidget {
     this.card = formInput.value;
   }
 
-  validateAlgorithm() {
-    const form = document.querySelector('form');
-    form.removeAttribute('data-status')
+  isValidCard() {
     let cardNumberReverse = this.card.split("").reverse().map(Number);
     const resultSum = cardNumberReverse.reduce((acc, number, index) => {
       if (index % 2 === 1) {
@@ -69,7 +67,13 @@ export class validateWidget {
       }
       return acc + number;
     }, 0)
-    const isValid = resultSum % 10 === 0
+    return resultSum % 10 === 0
+  }
+
+  validateAlgorithm() {
+    const form = document.querySelector('form');
+    form.removeAttribute('data-status')
+    const isValid = this.isValidCard()
     if (isValid) {
       form.setAttribute('data-status', true)
       this.statusCard = true;
@@ -170,7 +174,7 @@ export class validateWidget {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       this.getCardNumber();
-      this.validateAlgorithm();
+      this.isValidCard();
       this.validateCardType();
       const existBox = this.element.querySelector("p");
       if (existBox) {
